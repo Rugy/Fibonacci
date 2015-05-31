@@ -9,14 +9,14 @@ public class Main {
 	private static final int STARTINGNUMBER = 1;
 	private static final int MINIMALSEQUENCELENGTH = 5;
 	private static List<Integer> fibbonaciSequenceRecursive = new LinkedList<>();
+	private static List<Integer> fibbonaciSequenceIterative = new LinkedList<>();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CalculationErrorException {
 
 		int sequenceLength = MINIMALSEQUENCELENGTH;
 		if (validNumber(args)) {
 			sequenceLength = Integer.valueOf(args[0]);
 		}
-		List<Integer> fibbonaciSequenceIterative = new LinkedList<>();
 
 		// recursive takes longer, initiate first in separate Thread
 		Thread recursiveCalculation = new Thread(new Runnable() {
@@ -43,6 +43,10 @@ public class Main {
 				.println("Fibonacci sequence with recursive calculation up to "
 						+ sequenceLength + ": "
 						+ Arrays.toString(fibbonaciSequenceRecursive.toArray()));
+		if (!fibbonaciSequenceIterative.equals(fibbonaciSequenceRecursive)) {
+			throw new CalculationErrorException(
+					"Values calculated through iterative method differ from values calculated by recursive method.");
+		}
 
 	}
 
